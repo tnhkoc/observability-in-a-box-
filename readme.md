@@ -33,6 +33,7 @@ observability-in-a-box/
         ├── variables.tf
         ├── values.yaml
         └── grafana-dashboard.json
+```  
 ⚙️ Requirements
 Tool	Version
 Terraform	>= 1.5
