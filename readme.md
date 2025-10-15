@@ -104,7 +104,6 @@ terraform apply -auto-approve
 💬 Author
 Tunahan Koç
 Cloud & DevOps Engineer (AWS / Kubernetes / Terraform)
-[LinkedIn](https://www.linkedin.com/in/tunahan-koc-8b43b765) | [GitHub](https://github.com/tnhkoc)
 
 📜 License
 MIT License © 2025 Tunahan Koç
