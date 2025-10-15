@@ -1,3 +1,7 @@
+![Terraform](https://img.shields.io/badge/Terraform-1.5+-purple?logo=terraform)
+![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazonaws)
+![Grafana](https://img.shields.io/badge/Monitoring-Grafana%20%26%20Prometheus-yellow?logo=grafana)
+
 # 🧩 Observability in a Box
 
 A lightweight Terraform module that deploys **Prometheus** and **Grafana** on an existing **AWS EKS** cluster.
@@ -100,7 +104,7 @@ terraform apply -auto-approve
 💬 Author
 Tunahan Koç
 Cloud & DevOps Engineer (AWS / Kubernetes / Terraform)
-LinkedIn | GitHub
+![LinkedIn](https://www.linkedin.com/in/tunahan-koc-8b43b765) | ![GitHub](https://github.com/tnhkoc)
 
 📜 License
 MIT License © 2025 Tunahan Koç
