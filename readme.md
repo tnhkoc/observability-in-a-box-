@@ -2,123 +2,155 @@
 ![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazonaws)
 ![Grafana](https://img.shields.io/badge/Monitoring-Grafana%20%26%20Prometheus-yellow?logo=grafana)
 
-# 🧩 Observability in a Box
+# 🚀 Observability in a Box – AWS EKS + Terraform
 
-A lightweight Terraform module that deploys **Prometheus** and **Grafana** on an existing **AWS EKS** cluster.
+A production-ready Terraform automation that deploys a **complete observability stack (Prometheus + Grafana)** on your **AWS EKS cluster** in minutes.
 
-This project provides an easy way for small teams and developers to bootstrap observability on Kubernetes without manually configuring Helm charts.
-
----
-
-## 🌍 Overview
-
-**Key features:**
-- 🚀 One-command setup for monitoring on AWS EKS  
-- 📊 Prometheus & Grafana deployment via Helm provider  
-- ⚙️ Configurable namespace and admin credentials  
-- 💡 Works with any existing EKS cluster (no extra dependencies)
+> Created by **Tunahan Koç**  
+> Cloud & DevOps Engineer | AWS Certified Cloud Practitioner
 
 ---
 
-## 🧱 Module Structure
+## 🌐 Overview
 
-```bash
-observability-in-a-box/
-├── main.tf
-├── variables.tf
-├── outputs.tf
-└── examples/
-    └── eks-basic/
-        ├── provider.tf
-        ├── variables.tf
-        ├── values.yaml
-        └── grafana-dashboard.json
-```  
+This project provides an easy way to deploy a full observability setup (Prometheus + Grafana) on your AWS EKS cluster using Terraform and Helm.
+
+### What's Inside
+- `main.tf` → Terraform configuration for AWS + Helm providers  
+- `values.yaml` → Helm chart overrides for Prometheus and Grafana  
+- `apply.sh` → One-click deployment script  
+- `uninstall.sh` → Cleanup script  
+- `grafana-dashboard.json` → Example dashboard for Kubernetes metrics  
+- `quickstart.pdf` → Documentation & visual guide  
+
+---
+
 ## ⚙️ Requirements
-| Tool | Version / Note |
-|------|----------------|
-| Terraform | >= 1.5 |
-| AWS CLI | Configured with valid credentials |
-| kubectl | Access to your EKS cluster |
-| Helm | Installed locally (optional, for debugging) |
+
+| Tool | Version |
+|------|----------|
+| Terraform | ≥ 1.5 |
+| AWS CLI | Configured and authenticated |
+| EKS Cluster | Must already exist |
+| kubectl | Configured for EKS context |
+
+Check your setup:
+```bash
+terraform -version
+aws sts get-caller-identity
+kubectl get nodes
+```
 
 ---
+
 ## 🚀 Quick Start
-Clone the repository and apply the example setup:
+
+Clone the repository and execute the deployment script:
 
 ```bash
-git clone https://github.com/tunahankoc/observability-in-a-box.git
-cd observability-in-a-box/examples/eks-basic
-
-terraform init
-terraform apply -auto-approve
+git clone https://github.com/tunahan-koc/observability-in-a-box.git
+cd observability-in-a-box
+chmod +x apply.sh
+./apply.sh
 ```
 
-After a few minutes, check the Grafana service:
+When the script completes, Grafana will be accessible via a LoadBalancer URL.
 
+---
+
+## 📊 Access Grafana
+
+Get Grafana's external URL:
 ```bash
-kubectl get svc -n observability
+kubectl get svc grafana -n observability
 ```
 
-Then open the **LoadBalancer URL** in your browser and log in with:
+Then open the URL in your browser:  
+**http://<external-ip>**  
 
-```bash
-username: admin
-password: ChangeMe123!
+Default credentials:  
+```
+Username: admin
+Password: <your password or default>
 ```
 
 ---
-## 🍀 Module Inputs
 
-| Variable | Type | Default | Description |
-|-----------|------|----------|-------------|
-| region | string | "eu-central-1" | AWS region |
-| namespace | string | "observability" | Namespace for monitoring tools |
-| cluster_endpoint | string | n/a | EKS cluster API endpoint |
-| cluster_ca | string | n/a | Base64 encoded cluster CA certificate |
-| cluster_token | string | n/a | Token for EKS authentication |
-| grafana_admin_password | string | "ChangeMe123!" | Grafana admin password |
+## 🧩 File Structure
 
----
-## 📤 Outputs
-| Output | Description |
-|---------|-------------|
-| grafana_service | Helm release status for Grafana |
-| grafana_url_hint | Command hint to get Grafana service URL |
+```
+observability-in-a-box/
+├── apply.sh
+├── uninstall.sh
+├── main.tf
+├── outputs.tf
+├── variables.tf
+├── terraform.tfvars.example
+├── values.yaml
+├── grafana-dashboard.json
+└── quickstart.pdf
+```
 
 ---
-## 🧩 Example
-Example EKS usage is under `examples/eks-basic`:
 
+## 🧹 Uninstall
+
+To remove all resources deployed by Terraform:
+```bash
+./uninstall.sh
+```
+
+---
+
+## 🧠 Troubleshooting
+
+**Grafana not showing data?**  
+- Wait 2–3 minutes for Prometheus to scrape metrics  
+- Check Prometheus pod status:
+  ```bash
+  kubectl get pods -n observability
+  ```
+
+**LoadBalancer pending?**  
+- Verify that your cluster supports public LoadBalancer services  
+- Ensure your subnet has an Internet Gateway
+
+---
+
+## 💡 Example Outputs
+
+```bash
+Apply complete! Resources: 7 added.
+Grafana LoadBalancer URL:
+http://ab1234c567d890.elb.amazonaws.com
+```
+
+---
+
+## 🧰 Customization
+
+### Change Namespace
+Edit in `variables.tf`:
 ```hcl
-module "observability" {
-  source      = "../../"
-  region      = "eu-central-1"
-  cluster_name = "your-cluster-name"
-  grafana_admin_password = "SuperSecurePassword!"
+variable "namespace" {
+  default = "observability"
 }
 ```
 
-To test quickly:
-
-```bash
-cd examples/eks-basic
-terraform init
-terraform apply -auto-approve
+### Custom Grafana Password
+Set in `terraform.tfvars`:
+```hcl
+grafana_admin_password = "SecurePass123!"
 ```
 
 ---
-## 🗺️ Roadmap
-- [ ] Add Loki & Tempo integration (logs/traces)
-- [ ] Add AWS Managed Grafana option
-- [ ] Publish Terraform Registry module
+
+## 🧾 License & Author
+
+MIT License © 2025 **Tunahan Koç**  
+LinkedIn: [linkedin.com/in/tunahan-koc-8b43b765](https://linkedin.com/in/tunahan-koc-8b43b765)
 
 ---
-## 💬 Author
-**Tunahan Koç**  
-Cloud & DevOps Engineer (AWS / Kubernetes / Terraform)  
-[LinkedIn](https://www.linkedin.com/in/tunahan-koc-8b43b765) | [GitHub](https://github.com/tnhkoc)
 
----
-## 🪪 License
-MIT License © 2025 Tunahan Koç
+### ⭐ If you like this project, give it a star and share it!
+
