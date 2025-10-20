@@ -4,29 +4,19 @@ variable "region" {
   default     = "eu-central-1"
 }
 
+variable "cluster_name" {
+  description = "Name of your EKS cluster"
+  type        = string
+}
+
 variable "namespace" {
-  description = "Kubernetes namespace"
+  description = "Kubernetes namespace for monitoring stack"
   type        = string
   default     = "observability"
 }
 
-variable "cluster_endpoint" {
-  description = "EKS cluster endpoint"
-  type        = string
-}
-
-variable "cluster_ca" {
-  description = "EKS cluster CA certificate (base64)"
-  type        = string
-}
-
-variable "cluster_token" {
-  description = "Authentication token for the cluster"
-  type        = string
-}
-
 variable "grafana_admin_password" {
-  description = "Grafana admin password"
+  description = "Admin password for Grafana"
   type        = string
   sensitive   = true
   default     = "ChangeMe123!"

@@ -1,0 +1,15 @@
+# Minimal Prometheus config for EKS
+server:
+  persistentVolume:
+    enabled: false
+  
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+nodeExporter:
+  enabled: true
+  tolerations:
+    - operator: Exists
