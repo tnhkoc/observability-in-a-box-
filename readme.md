@@ -7,7 +7,7 @@
 A production-ready Terraform automation that deploys a **complete observability stack (Prometheus + Grafana)** on your **AWS EKS cluster** in minutes.
 
 > Created by **Tunahan Koç**  
-> Cloud & DevOps Engineer | AWS Certified Cloud Practitioner
+> Platform Support Specialist | AWS Certified Cloud Practitioner
 
 ---
 
